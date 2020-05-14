@@ -1,0 +1,18 @@
+public int LengthOfLongestSubstring(string s)
+{
+    var result = 0;
+    Queue<char> queue = new Queue<char>();
+    foreach (var c in s)
+    {
+        while (queue.Contains(c))
+        {
+            queue.Dequeue();
+        }
+        queue.Enqueue(c);
+        if (queue.Count > result)
+        {
+            result = queue.Count;
+        }
+    }
+    return result;
+}
