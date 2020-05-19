@@ -1,0 +1,73 @@
+//初解拟建立一个双指针和滑框的结构
+//滑框的大小可以只扩大不缩小，降低筛选次数
+//需要一个是回文的判断
+public class Solution
+{
+    public string LongestPalindrome(string s)
+    {
+        if (s.Length == 0 || s.Length == 1)
+        {
+            return s;
+        }
+        var maxLength = 1;
+        var pointer = 0;
+        var startpoint = 0;
+        while (pointer + maxLength - 1 < s.Length - 1)
+        {
+            if (maxLength == 1 && pointer + maxLength < s.Length - 1)
+            {
+                if (isPalindrome(s.Substring(pointer, maxLength + 2)))
+                {
+                    maxLength = 3;
+                    startpoint = pointer;
+                    continue;
+                }
+            }
+
+            if (s[pointer] == s[pointer + maxLength])
+            {
+                if (isPalindrome(s.Substring(pointer, maxLength + 1)))
+                {
+                    maxLength++;
+                    startpoint = pointer;
+                    continue;
+                }
+            }
+            if (pointer >= 1 && (s[pointer - 1] == s[pointer + maxLength - 1]))
+            {
+                if (isPalindrome(s.Substring(pointer - 1, maxLength + 1)))
+                {
+                    maxLength++;
+                    pointer--;
+                    startpoint = pointer;
+                    continue;
+                }
+            }
+            if (pointer >= 1 && (s[pointer - 1] == s[pointer + maxLength]))
+            {
+                if (isPalindrome(s.Substring(pointer - 1, maxLength + 2)))
+                {
+                    maxLength = maxLength + 2;
+                    pointer--;
+                    startpoint = pointer;
+                    continue;
+                }
+            }
+            pointer++;
+        }
+        return s.Substring(startpoint, maxLength);
+    }
+    public bool isPalindrome(string s)
+    {
+        var first = 0;
+        var last = s.Length - 1;
+        while (first <= last)
+        {
+            if (s[first++] != s[last--])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+}
