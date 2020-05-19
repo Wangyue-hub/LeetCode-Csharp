@@ -1,0 +1,45 @@
+//第一直觉是建立一个二维数组，然后填格子，然后读
+//但是可能有别的方法直接读出来？
+//把第一个和最后一组作为边界，相差(numRows-2)*2+2个元素
+//其他的第i组，会多获取一个位于(numRows-2-i)*2+2的元素
+public class Solution
+{
+    public string Convert(string s, int numRows)
+    {
+        if (s.Length <= numRows || numRows == 1)
+        {
+            return s;
+        }
+        var length = s.Length;
+        StringBuilder result = new StringBuilder();
+        var pointer = 0;
+
+        while (pointer <= length - 1)
+        {
+            result.Append(s[pointer]);
+            pointer = pointer + (numRows - 2) * 2 + 2;
+        }
+
+        for (var i = 1; i <= numRows - 2; i++)
+        {
+            pointer = i;
+            while (pointer <= length - 1)
+            {
+                result.Append(s[pointer]);
+                if (pointer + (numRows - 2 - i) * 2 + 2 <= length - 1)
+                {
+                    result.Append(s[pointer + (numRows - 2 - i) * 2 + 2]);
+                }
+                pointer = pointer + (numRows - 2) * 2 + 2;
+            }
+        }
+        pointer = numRows - 1;
+        while (pointer <= length - 1)
+        {
+            result.Append(s[pointer]);
+            pointer = pointer + (numRows - 2) * 2 + 2;
+        }
+        return result.ToString();
+
+    }
+}
