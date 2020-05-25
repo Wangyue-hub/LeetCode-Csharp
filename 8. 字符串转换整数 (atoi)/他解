@@ -1,0 +1,87 @@
+//此为官方提出的思路，尝试理解并使用C#实现
+/*
+思考过程：
+状态机主要根据输入进行状态切换，输入值的状态有限且固定且在同一状态机中平等，不同的输入类型得到的结果也有限且固定，状态之前切换条件固定，可以采用状态机的方法。
+此处分为四种状态，开始状态，对应开头的空格位
+标记符状态，对应正负号
+数值状态，对应数字位
+结束状态，收尾出值
+在转入状态的时间点，在新状态中处理
+*/
+public class Solution
+{
+    string status = "start";
+    readonly IReadOnlyDictionary<string, string[]> STATUSMECHINE = new Dictionary<string, string[]>() {
+            //输入值类型分四种 空格，符号，数字，其他
+            {"start",new string[4]{"start","signed","in_number","end" } },
+            {"signed",new string[4]{"end","end","in_number","end"} },
+            {"in_number",new string[4]{"end","end","in_number","end" } },
+            {"end",new string[4]{"end","end","end","end" } }
+        };
+
+    //获取状态类型
+    public static int GetCol(char c)
+    {
+        if (char.IsWhiteSpace(c))
+            return 0;
+        if (c == '+' || c == '-')
+            return 1;
+        if (char.IsDigit(c))
+            return 2;
+        return 3;
+    }
+
+    public int MyAtoi(string str)
+    {
+        MechionSolution mathionSolution = new MechionSolution();
+        foreach (var s in str)
+        {
+            status = STATUSMECHINE.GetValueOrDefault(status)[GetCol(s)];
+            mathionSolution.Get(s, status);
+        }
+        return mathionSolution.GetResult();
+
+    }
+
+    public class MechionSolution
+    {
+        private int sign = 1;
+        private int result = 0;
+
+        public void Get(char c, string status)
+        {
+            if (status == "signed")
+                sign = c == '+' ? 1 : -1;
+            if (status == "in_number")
+            {
+                if (sign == 1 && (int.MaxValue - int.Parse(c.ToString())) / 10 < result)
+                {
+                    result = int.MaxValue;
+                    return;
+                }
+                //此处假定为只有存储32位整数的环境，所以要绕一下圈子，否则可以尝试换大容器
+                if (sign == -1 && (int.MinValue + int.Parse(c.ToString())) / 10 > result * -1)
+                {
+                    result = int.MinValue;
+                    return;
+                }
+                result = result * 10 + int.Parse(c.ToString());
+            }
+        }
+
+        public int GetResult()
+        {
+            if (sign == 1)
+            {
+                return result;
+            }
+            else
+            {
+                if (result == int.MinValue)
+                    return result;
+                else
+                    return sign * result;
+            }
+        }
+    }
+}
