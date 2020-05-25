@@ -1,0 +1,28 @@
+public class Solution
+{
+    public int Reverse(int x)
+    {
+        if (x / 10 == 0)
+        {
+            return x;
+        }
+        int[] resultArray;
+        var result = 0;
+        StringBuilder resultstr = new StringBuilder();
+        bool isNegative = false;
+        var xstr = x.ToString();
+        if (xstr.Contains("-"))
+            isNegative = true;
+        foreach (var c in xstr.Reverse())
+        {
+            if (c != '-')
+            {
+                resultstr.Append(c);
+            }
+        }
+        var canparse = int.TryParse(resultstr.ToString(), out result);
+        if (isNegative)
+            result = result * -1;
+        return result;
+    }
+}
