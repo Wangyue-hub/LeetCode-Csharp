@@ -1,0 +1,38 @@
+public class Solution
+{
+    public int MyAtoi(string str)
+    {
+        StringBuilder resultBuilder = new StringBuilder();
+        var res = 0;
+        foreach (var s in str)
+        {
+            if (resultBuilder.Length == 0 && s == ' ')
+                continue;
+            if (resultBuilder.Length == 0 && (s == '+' || s == '-'))
+            {
+                resultBuilder.Append(s);
+                continue;
+            }
+            if (int.TryParse(s.ToString(), out res))
+            {
+                resultBuilder.Append(s);
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (int.TryParse(resultBuilder.ToString(), out res))
+        {
+            return res;
+        }
+        else if (resultBuilder.Length > 1)
+        {
+            if (resultBuilder[0] == '-')
+                return int.MinValue;
+            return int.MaxValue;
+        }
+        return 0;
+    }
+}
