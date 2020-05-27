@@ -1,0 +1,34 @@
+//回文判断，不加限制的话白给
+//但是不转字符串怎么办？
+//加入限制不转字符串
+public class Solution
+{
+    public bool IsPalindrome(int x)
+    {
+        var result = false;
+        if (x < 0)
+        {
+            return false;
+        }
+        if (x < 10)
+        {
+            return true;
+        }
+        var res = x;
+        var xlist = new List<int>();
+        while (x > 0)
+        {
+            xlist.Add(x % 10);
+            x = x / 10;
+        }
+        for (var i = xlist.Count - 1; i >= 0; i--)
+        {
+            x += xlist[i] * (int)Math.Pow(10, xlist.Count - 1 - i);
+        }
+        if (x == res)
+        {
+            result = true;
+        }
+        return result;
+    }
+}
