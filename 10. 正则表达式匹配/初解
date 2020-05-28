@@ -1,0 +1,49 @@
+//此为无效解法
+//常识去思考同时单指针或者双指针，但是都无法解决问题
+//构思时间超时，放弃
+public class Solution
+    {
+
+        public  bool IsMatch(string s, string p)
+        {
+            var result = false;
+            var pointer1 = 0;
+            var pointer2 = 0;
+
+            var target1 = s.Length;
+            var target2 = p.Length;
+
+            while (pointer2 <= target2-1)            
+            {
+                if (pointer1 == target1 &&(pointer2 == target2||(pointer2 >= target2 - 2 && p[target2 - 1] == '*')))
+                {
+                    result = true;
+                    break;
+                }
+                if (s[pointer1] == p[pointer2]|| p[pointer2] == '.')
+                {
+                    pointer1++;
+                    pointer2++;
+                    continue;
+                }
+                if (p[pointer2] == '*' && pointer2 > 0 && (s[pointer1] == p[pointer2 - 1] || p[pointer2 - 1] == '.'))
+                {
+                    pointer1--;
+                    continue;
+                }
+                if (p[pointer2] == '*' && (s[pointer1] == p[pointer2 + 1] || p[pointer2 + 1] == '.'))
+                {
+                    pointer2++;
+                    continue;
+                }
+                
+                if (pointer2 < target2 - 2 && p[pointer2 + 1] == '*')
+                {
+                    pointer2 += 2;
+                    continue;
+                }
+                break;
+            }
+            return result;
+        }
+    }

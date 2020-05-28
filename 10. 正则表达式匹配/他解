@@ -1,0 +1,43 @@
+public class Solution
+{
+    public bool IsMatch(string s, string p)
+    {
+        //当规则执行完 那么s也应该判断到结尾了
+        if (string.IsNullOrEmpty(p))
+        {
+            return string.IsNullOrEmpty(s);
+        }
+
+        var firstCharMatch = string.IsNullOrEmpty(s) ? false : (s[0] == p[0] || p[0] == '.');
+
+        if (p.Length == 1 || p[1] != '*')
+        {
+            return firstCharMatch && IsMatch(s.Remove(0, 1), p.Remove(0, 1));
+        }
+
+        if (p == ".*")
+        {
+            return true;
+        }
+        if (!firstCharMatch)
+        {
+            return IsMatch(s, p.Remove(0, 2));
+        }
+        // 执行到这的时候   p[1] == *  这时需要深入查找所有分支是否匹配
+        while (s.Length > 0)
+        {
+            //第一步直接匹配移除 p[0]*的操作  
+            //这里用来处理  aaa  a*a  这种情况  此时的a* 为0个a
+            if (IsMatch(s, p.Remove(0, 2)))
+            {
+                return true;
+            }
+            else if (p[0] != s[0] && p[0] != '.') // 这的if else 为了方便理解  因为前面已经匹配过p[0] == s[0] 所以这里的p[0] !=s[0] 是为了过滤中间包含不匹配字母的情况 sippi  s*p*. 
+            {
+                return false;
+            }
+            s = s.Remove(0, 1);
+        }
+        return IsMatch(s, p.Remove(0, 2));
+    }
+}
