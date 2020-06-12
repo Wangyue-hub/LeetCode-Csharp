@@ -1,0 +1,18 @@
+public class Solution
+{
+    public int RomanToInt(string s)
+    {
+        int[] values = { 900, 1000, 400, 500, 90, 100, 40, 50, 9, 10, 4, 5, 1 };
+        string[] reps = { "CM", "M", "CD", "D", "XC", "C", "XL", "L", "IX", "X", "IV", "V", "I" };
+        var result = 0;
+        for (int i = 0; i < 13; i++)
+        {
+            while (s.IndexOf(reps[i]) > -1)
+            {
+                s = s.Remove(s.IndexOf(reps[i]), reps[i].Length);
+                result += values[i];
+            }
+        }
+        return result;
+    }
+}
