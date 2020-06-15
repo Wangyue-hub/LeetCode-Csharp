@@ -1,0 +1,36 @@
+public class Solution
+{
+    public string LongestCommonPrefix(string[] strs)
+    {
+        if (strs.Length == 0)
+        {
+            return "";
+        }
+        var result = strs[0];
+        for (var i = 0; i <= strs.Length - 1; i++)
+        {
+            while (result == "")
+            {
+                break;
+            }
+            result = GetLongestCommonPrefixofTwoStr(result, strs[i]);
+        }
+        return result;
+    }
+    public string GetLongestCommonPrefixofTwoStr(string s, string t)
+    {
+        StringBuilder builder = new StringBuilder();
+        var i = 0;
+        while (i < s.Length && i < t.Length)
+        {
+            if (s[i] == t[i])
+            {
+                builder.Append(s[i]);
+                i++;
+            }
+            else
+                break;
+        }
+        return builder.ToString();
+    }
+}
