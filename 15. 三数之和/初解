@@ -1,0 +1,82 @@
+//构筑双指针，类对撞指针模型，可行但是超时了
+    public class Solution
+    {
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            List<IList<int>> result = new List<IList<int>>();
+            nums = nums.OrderBy(x => x).ToArray();
+            var pointer1 = 0;
+            var pointer2 = nums.Length - 1;
+            while (pointer2 - pointer1 > 1)
+            {
+                if (nums[pointer1] > 0 || nums[pointer2] < 0)
+                {
+                    break;
+                }
+                if (Math.Abs(nums[pointer1]) > nums[pointer2])
+                {
+                    var pointer3 = pointer2;
+                    while (pointer3 - pointer1 > 1 && nums[pointer3]+nums[pointer1]/2>=0)
+                    {
+                        var pointer4 = pointer3-1;
+                        while (pointer4 - pointer1 >= 1 && nums[pointer4] >= (0 - nums[pointer3] - nums[pointer1]))
+                        {
+                            if (nums[pointer4] == (0 - nums[pointer3] - nums[pointer1]))
+                            {
+                                List<int> item = new List<int>() { nums[pointer3], 0 - nums[pointer3] - nums[pointer1], nums[pointer1] };
+                                result.Add(item);
+                            }
+                            pointer4--;
+                            while (pointer4 - pointer1 >= 1 && nums[pointer4] == nums[pointer4 + 1])
+                            {
+                                pointer4--;
+                            }
+                        }
+
+                        pointer3--;
+                        while (pointer3 - pointer1 > 1 && nums[pointer3] == nums[pointer3 + 1])
+                        {
+                            pointer3--;
+                        }
+                    }
+                    pointer1++;
+                    while (pointer2 - pointer1 > 1 && nums[pointer1] == nums[pointer1 - 1])
+                    {
+                        pointer1++;
+                    }
+                }
+                else
+                {
+                    var pointer3 = pointer1;
+                    while (pointer2 - pointer3 > 1 && nums[pointer3] + nums[pointer1] / 2 <= 0)
+                    {
+                        var pointer4 = pointer3+1;
+                        while (pointer2 - pointer4 >= 1 && nums[pointer4] <= (0 - nums[pointer3] - nums[pointer2]))
+                        {
+                            if (nums[pointer4] == (0 - nums[pointer3] - nums[pointer2]))
+                            {
+                                List<int> item = new List<int>() { nums[pointer3], 0 - nums[pointer3] - nums[pointer2], nums[pointer2] };
+                                result.Add(item);
+                            }
+                            pointer4++;
+                            while (pointer2 - pointer4 >= 1 && nums[pointer4] == nums[pointer4 - 1])
+                            {
+                                pointer4++;
+                            }
+                        }
+                        pointer3++;
+                        while (pointer2 - pointer3 > 1 && nums[pointer3] == nums[pointer3 - 1])
+                        {
+                            pointer3++;
+                        }
+                    }
+                    pointer2--;
+                    while (pointer2 - pointer1 > 1 && nums[pointer2] == nums[pointer2 + 1])
+                    {
+                        pointer2--;
+                    }
+                }
+            }
+            return result;
+        }
+    }
