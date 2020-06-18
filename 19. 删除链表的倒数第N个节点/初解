@@ -1,0 +1,41 @@
+public class Solution
+{
+    public ListNode RemoveNthFromEnd(ListNode head, int n)
+    {
+        List<ListNode> listNodes = new List<ListNode>();
+        var result = head;
+        while (head != null)
+        {
+            listNodes.Add(head);
+            if (head.next != null)
+            {
+                head = head.next;
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (n > listNodes.Count)
+        {
+            return null;
+        }
+        if (n > 1 && n == listNodes.Count)
+        {
+            return result.next;
+        }
+        if (n == 1 && listNodes.Count == 1)
+        {
+            return null;
+        }
+        listNodes[listNodes.Count - n - 1].next = listNodes[listNodes.Count - n - 1].next.next;
+        return result;
+
+    }
+}
+public class ListNode
+{
+    public int val;
+    public ListNode next;
+    public ListNode(int x) { val = x; }
+}
