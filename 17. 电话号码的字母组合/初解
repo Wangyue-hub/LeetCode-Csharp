@@ -1,0 +1,34 @@
+public class Solution
+{
+    public IList<string> LetterCombinations(string digits)
+    {
+        var result = new List<string>();
+        if (digits.Length == 0)
+        {
+            return result;
+        }
+        List<string> strs = new List<string>() { "", "", "abc", "def", "ghi", "jil", "mno", "pqrs", "tuv", "wxyz" };
+        foreach (var s in digits)
+        {
+            var newresult = new List<string>();
+            var i = int.Parse(s.ToString());
+            if (result.Count == 0)
+            {
+                foreach (var j in strs[i])
+                {
+                    result.Add(j.ToString());
+                }
+                continue;
+            }
+            foreach (var t in result)
+            {
+                foreach (var j in strs[i])
+                {
+                    newresult.Add(t + j);
+                }
+            }
+            result = newresult;
+        }
+        return result;
+    }
+}
