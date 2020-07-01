@@ -1,0 +1,45 @@
+public class Solution
+{
+    public bool IsValid(string s)
+    {
+        if (string.IsNullOrWhiteSpace(s))
+        {
+            return true;
+        }
+        if (s.Length < 2)
+        {
+            return false;
+        }
+        if (s.Length % 2 == 1)
+        {
+            return false;
+        }
+        Dictionary<string, string> parenthesesdic = new Dictionary<string, string>() { { "(", ")" }, { "[", "]" }, { "{", "}" } };
+        Stack<string> strs = new Stack<string>();
+        var pointer = 0;
+        while (pointer < s.Length)
+        {
+            if (parenthesesdic.ContainsKey(s[pointer].ToString()))
+            {
+                strs.Push(s[pointer].ToString());
+            }
+            else
+            {
+                if (strs.Count > 0 && s[pointer].ToString() == parenthesesdic.GetValueOrDefault(strs.Peek()))
+                {
+                    strs.Pop();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            pointer++;
+        }
+        if (strs.Count > 0)
+        {
+            return false;
+        }
+        return true;
+    }
+}
