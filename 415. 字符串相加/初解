@@ -1,0 +1,38 @@
+public static string AddStrings(string num1, string num2)
+{
+    var num1Pointer = num1.Length;
+    var num2Pointer = num2.Length;
+    var carryPoint = 0;
+
+    StringBuilder stringBuilder = new StringBuilder();
+    while (num1Pointer > 0 || num2Pointer > 0 || carryPoint > 0)
+    {
+        var left = 0;
+        var right = 0;
+        var root = 0;
+        if (num1Pointer > 0)
+        {
+            left = int.Parse(num1[num1Pointer - 1].ToString());
+            num1Pointer--;
+        }
+        if (num2Pointer > 0)
+        {
+            right = int.Parse(num2[num2Pointer - 1].ToString());
+            num2Pointer--;
+        }
+        if (carryPoint > 0)
+        {
+            root += 1;
+            carryPoint -= 1;
+        }
+        root = root + left + right;
+        if (root >= 10)
+        {
+            root = root - 10;
+            carryPoint += 1;
+        }
+        stringBuilder.Insert(0, root);
+    }
+    return stringBuilder.ToString();
+}
+    
