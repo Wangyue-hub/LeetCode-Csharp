@@ -1,0 +1,29 @@
+public void Flatten(TreeNode root)
+        {
+            Fun0(root);
+        }
+
+        void Fun0(TreeNode treeNode)
+        {
+            Stack<TreeNode> treeNodes = new Stack<TreeNode>();
+            treeNodes.Push(treeNode);
+            TreeNode p = null, q = null;
+            while (treeNodes.Any())
+            {
+                p = treeNodes.Pop();
+                if (q != null)
+                {
+                    q.right = p;
+                }
+                while (p != null) {
+                    if (p.right != null)
+                    {
+                        treeNodes.Push(p.right);
+                    }
+                    p.right = p.left;
+                    p.left = null;
+                    q = p;
+                    p = p.right;
+                }
+            }
+        }
