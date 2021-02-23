@@ -1,0 +1,43 @@
+public class Solution
+    {
+        public int MaxSatisfied(int[] customers, int[] grumpy, int X)
+        {
+            int sum = 0;
+            int length = customers.Length;
+            //分为可以保持满意度的分数和被浪费掉的分数
+            //先获取一次满意的分数
+            for (int i = 0; i <= length - 1; i++)
+            {
+                if (grumpy[i] == 0)
+                {
+                    //获取后替换掉
+                    sum += customers[i];
+                    customers[i] = 0;
+                }
+            }
+            if (X <= 0)
+            {
+                return sum;
+            }
+            int x_minute_summax = 0;
+            int x_minute_sum = 0;
+            if (X >= length)
+                X = length;
+            for (int j = 0; j <= X - 1; j++)
+            {
+                x_minute_sum += customers[j];
+            }
+            x_minute_summax = x_minute_sum;
+            int k = 0;
+            while (X < length)
+            {
+                x_minute_sum = x_minute_sum - customers[k] + customers[X];
+                if (x_minute_sum > x_minute_summax)
+                    x_minute_summax = x_minute_sum;
+                k++;
+                X++;
+            }
+            return sum+ x_minute_summax;
+        }
+    }
+    //很简单，分解问题一下就好
