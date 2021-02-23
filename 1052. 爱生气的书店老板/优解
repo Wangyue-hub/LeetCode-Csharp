@@ -1,0 +1,25 @@
+class Solution {
+    public int maxSatisfied(int[] customers, int[] grumpy, int X) {
+        int total = 0;
+        int n = customers.length;
+        for (int i = 0; i < n; i++) {
+            if (grumpy[i] == 0) {
+                total += customers[i];
+            }
+        }
+        int increase = 0;
+        for (int i = 0; i < X; i++) {
+            increase += customers[i] * grumpy[i];
+        }
+        int maxIncrease = increase;
+        for (int i = X; i < n; i++) {
+            increase = increase - customers[i - X] * grumpy[i - X] + customers[i] * grumpy[i];
+            maxIncrease = Math.max(maxIncrease, increase);
+        }
+        return total + maxIncrease;
+    }
+}
+
+//其实是java 不过没多少区别就不改成C#了。。。
+//差距在于没有使用数学公式的概念
+//不出意外数学水平会成为下一个难以跨越的障碍
