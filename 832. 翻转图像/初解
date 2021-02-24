@@ -1,0 +1,26 @@
+public class Solution
+{
+    public int[][] FlipAndInvertImage(int[][] A)
+    {
+        int pointer1 = 0;
+        int pointer2 = A[0].Length - 1;
+        for (int i = 0; i < A.Length; i++)
+        {
+            while (pointer1 <= pointer2)
+            {
+                int res = A[i][pointer1];
+                A[i][pointer1] = Math.Abs(A[i][pointer2] - 1);
+                A[i][pointer2] = Math.Abs(res - 1);
+                pointer1++;
+                pointer2--;
+            }
+            pointer1 = 0;
+            pointer2 = A[i].Length - 1;
+
+        }
+
+        return A;
+    }
+}
+
+//本身没什么难度，只要还是熟练度问题
