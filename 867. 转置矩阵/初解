@@ -1,0 +1,20 @@
+public class Solution
+    { 
+        public int[][] Transpose(int[][] matrix)
+        {
+            int matrix_width = matrix.Length;
+            int matrix_length = matrix[0].Length;
+            int[][] new_matrix = new int[matrix_length][];
+            for (int i = 0; i <= matrix_length-1; i++)
+            {
+                new_matrix[i] = new int[matrix_width];
+                for (int j = 0; j <= matrix_width-1; j++)
+                {   
+                    new_matrix[i][j] = matrix[j][i];
+                }
+            }
+            return new_matrix;
+        }
+    }
+
+    //我正在反省基本功的问题
