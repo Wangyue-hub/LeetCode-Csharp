@@ -1,0 +1,34 @@
+ public class Solution
+    {
+        public IList<int> FindNumOfValidWords(string[] words, string[] puzzles)
+        {
+            var res = new List<int>();
+            var wordsSummary = new int[words.Length];
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                foreach (var C in words[i])
+                {
+                    wordsSummary[i] |= 1 << (C - 'a');
+                }
+            }
+            for (int i = 0; i < puzzles.Length; i++)
+            {
+                int puzzleSummary = 0, count = 0;
+                // 用同上方法计算谜面
+                foreach (var c in puzzles[i])
+                {
+                    puzzleSummary |= 1 << (c - 'a');
+                }
+
+                for (int j = 0; j < words.Length; j++)
+                {
+                    if ((puzzleSummary | wordsSummary[j]) == puzzleSummary && ((1 << (puzzles[i][0] - 'a')) | wordsSummary[j]) == wordsSummary[j])
+                        count++;
+                }
+                res.Add(count);
+            }
+            return res;
+        }
+    }
+    //因为有26个字符，所以使用零一串来做

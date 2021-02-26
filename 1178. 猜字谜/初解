@@ -1,0 +1,32 @@
+public class Solution
+    {
+        public IList<int> FindNumOfValidWords(string[] words, string[] puzzles)
+        {
+            IList<int> result = new List<int>();
+            for (int i = 0; i <= puzzles.Length - 1; i++)
+            {
+                int count = 0;
+                for (int j = 0; j <= words.Length-1; j++)
+                {
+                    string word =new string(words[j].Distinct().ToArray());
+                    if (word.Contains(puzzles[i][0])&&word.Length<8)
+                    {
+                        HashSet<char> stringset = new HashSet<char>(puzzles[i].ToArray());
+                        foreach (var k in word)
+                        {
+                            if (stringset.Add(k))
+                            {
+                                stringset.Remove(k);
+                                goto outer; }
+                        }
+                        count++;
+                    }
+                    outer:;
+                }
+                result.Add(count);
+            }
+            return result;
+        }
+    }
+
+    //直接的想法，使用判断和哈希来节省时间，但是该超时还是超时了
