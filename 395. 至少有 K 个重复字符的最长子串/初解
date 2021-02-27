@@ -1,0 +1,56 @@
+public class Solution
+    {
+        public int LongestSubstring(string s, int k)
+        {
+            var letterSum = new int[26];
+            var result = 0;
+            int pointer = 0;
+
+            if (k == 1)
+            {
+                return s.Count();
+            }
+
+            foreach (var c in s)
+            {
+                letterSum[c - 'a'] += 1;
+            }
+            var res = new int[26];
+            while (letterSum.Where(x => x >= k).Count() > 0)
+            {
+                if (pointer <= s.Length - 1 && letterSum[s[pointer] - 'a'] >= k)
+                {
+                    res[s[pointer] - 'a']++;
+                }
+                else
+                {
+                    if (res.Where(x => x != 0 && x < k).Count() == 0)
+                    {
+                        result = res.Sum() > result ? res.Sum() : result;
+                    }
+                    else if (res.Where(x => x >= k).Count() >= 0)
+                    {
+                        //考虑到 存在前面部分干扰可以去除的情况，引入pointer2
+                        //美观考虑可以递归
+                        var pointer2 = pointer - res.Sum();
+
+                        var res2 = LongestSubstring(s.Substring(pointer2, res.Sum()), k);
+                        result = res2 > result ? res2 : result;
+
+
+                    }
+                    for (int i = 0; i <= 25; i++)
+                    {
+                        letterSum[i] = letterSum[i] - res[i];
+                    }
+                    res = new int[26];
+                }
+                pointer++;
+            }
+            return result;
+        }
+    }
+    //最后改了递归，“递归是我的好朋友”
+    //还有优化的余地，因为改了递归，所以一些判断可以省下来
+    //一开始没意识到这是个重复可用递归的情况
+    
