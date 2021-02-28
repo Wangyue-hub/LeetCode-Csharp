@@ -1,0 +1,20 @@
+public class Solution
+    {
+        public bool IsMonotonic(int[] A)
+        {
+            if (A.Count() <= 2)
+            {
+                return true;
+            }
+            int res = 0;
+            for (int i = 1; i <= A.Length - 2; i++)
+            {
+                if (res == 0 && (A[i] - A[i-1]) != 0)
+                    res = (A[i] - A[i-1]) ;
+                if (res* (A[i+1] - A[i]) < 0)
+                    return false;
+            }
+            return true;
+        }
+    }
+    //简单来说简单，但是居然翻了车，还是熟练度问题。。
