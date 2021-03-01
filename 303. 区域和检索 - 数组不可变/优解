@@ -1,0 +1,21 @@
+//官方提供的优解，前缀和
+//因为会多次调用sum方法，所以不储存数组而是储存和
+public class NumArray
+    {
+        int[] sumarray;
+        public NumArray(int[] nums)
+        {
+            var numarray = nums;
+            sumarray= new int[numarray.Length+1];
+            for(int i=0;i<=numarray.Length;i++)
+            {
+                sumarray[i+1]=sumarray[i]+numarray[i];
+            }
+
+        }
+
+        public int SumRange(int i, int j)
+        {
+            return sumarray[j+1]-sumarray[i];
+        }
+    }

@@ -1,0 +1,19 @@
+    public class NumArray
+    {
+        int[] numarray;
+        public NumArray(int[] nums)
+        {
+            numarray = nums;
+        }
+
+        public int SumRange(int i, int j)
+        {
+            int sum = 0;
+            for (int ind = i; ind <= j; ind++)
+            {
+                sum += numarray[ind];
+            }
+            return sum;
+        }
+    }
+    //毫无亮点的构造函数使用
