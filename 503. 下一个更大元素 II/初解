@@ -1,0 +1,43 @@
+    public class Solution
+    {
+
+        public int[] NextGreaterElements(int[] nums)
+        {
+            var result = new List<int>();
+            var max = nums.Max();
+            for (var i = 0; i <= nums.Length-1; i++)
+            {
+                if (nums[i] == max)
+                {
+                    result.Add(-1);
+                }
+                else
+                {
+                    var find = false;
+                    var j = i;
+                    while (!find&&j<=nums.Length-1)
+                    {
+                        if (nums[j] > nums[i])
+                        {
+                            result.Add(nums[j]);
+                            find = true;
+                        }
+                        j++;
+                    }
+                    var k = 0;
+                    while (!find)
+                    {
+                        if (nums[k] > nums[i])
+                        {
+                            result.Add(nums[k]);
+                            find = true;
+                        }
+                        k++;
+                    }
+                }
+            }
+            return result.ToArray();
+        }
+    }
+    //也可以通过记录单调区域和极值来简化
+    
