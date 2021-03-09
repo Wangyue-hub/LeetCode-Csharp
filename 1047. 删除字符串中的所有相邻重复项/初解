@@ -1,0 +1,27 @@
+    public class Solution
+    {
+        public string RemoveDuplicates(string S)
+        {
+            if (S.Length <= 1)
+            {
+                return S;
+            }
+            var i = 0;
+            while (i <= S.Length - 2)
+            {
+                if (S[i] == S[i + 1])
+                {
+                    S=S.Remove(i, 2);
+                    if (i > 0)
+                    {
+                        i--;
+                    }
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            return S;
+        }
+    }
