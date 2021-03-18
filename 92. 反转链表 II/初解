@@ -1,0 +1,63 @@
+public class Solution
+    {
+        public ListNode ReverseBetween(ListNode head, int left, int right)
+        {
+            if (left == right)
+                return head;
+            var reslist = new List<ListNode>();
+            var resnode = head;
+            var leftnode = new ListNode();
+            var rightnode = new ListNode();
+            bool record = false;
+            int location = 1;
+            bool hasright=false;
+            while (location<right+1)
+            {
+                if (location == left-1)
+                {
+                    leftnode = resnode;
+                }
+                if (location == left)
+                {
+                    record = true;
+                }
+                if (record)
+                {
+                    reslist.Add(resnode);
+                }
+                if (location == right)
+                {
+                    if (resnode.next != null)
+                    {
+                        hasright=true;
+                         rightnode = resnode.next; }
+                    record = false;
+                }
+                if(resnode.next!=null)
+                    {
+                        
+                        resnode = resnode.next;
+                    }
+                location++;
+            }
+            for (var i = reslist.Count - 1; i >0; i--)
+            {
+                reslist[i].next = reslist[i - 1];
+            }
+            reslist[0].next =null;
+            if (left!=1)
+            {
+                leftnode.next = reslist[reslist.Count - 1];
+            }
+            if (hasright)
+            {
+                reslist[0].next = rightnode;
+            }
+            if (left == 1)
+            {
+                return reslist[right-1];
+            }
+            return head;
+        }
+    }
+    
