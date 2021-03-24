@@ -1,0 +1,50 @@
+public class Solution
+    {
+        public bool Find132pattern(int[] nums)
+        {
+            int min = 0;
+            int resmin = 0;
+            int max = 0;
+            int pointer = 0;
+            if (nums.Length < 3)
+            {
+                return false;
+            }
+            //首先找到递增的结构
+            while ( pointer < nums.Length - 1&&nums[pointer + 1] < nums[pointer])
+            {
+                pointer++;
+            }
+            if (pointer >= nums.Length - 2)
+            {
+                return false;
+            }
+            min = nums[pointer];
+            resmin = min;
+            max = nums[pointer + 1];
+
+            for (var i = pointer+2; i <= nums.Length - 1; i++)
+            {
+                if (nums[i] <= min)
+                {
+                    if (nums[i] < resmin)
+                    {
+                        resmin = nums[i];
+                    }
+                }
+                else if (nums[i] >= max)
+                {
+                    max = nums[i];
+                    if (resmin < min)
+                    {
+                        min = resmin;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return Find132pattern(nums.Skip(pointer+1).ToArray());
+        }
+    }
