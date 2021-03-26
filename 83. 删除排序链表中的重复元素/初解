@@ -1,0 +1,22 @@
+public class Solution
+    {
+        public ListNode DeleteDuplicates(ListNode head)
+        {
+            if (head == null)
+            {
+                return head;
+            }
+            var resnode = head;
+            while (resnode.next != null)
+            {
+                if (resnode.val == resnode.next.val)
+                {
+                    resnode.next = resnode.next.next;
+                } else
+                {
+                    resnode = resnode.next;
+                }
+            }
+            return head;
+        }
+    }
