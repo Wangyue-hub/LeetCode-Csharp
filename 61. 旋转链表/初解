@@ -1,0 +1,33 @@
+   public class Solution
+    {
+        public ListNode RotateRight(ListNode head, int k)
+        {
+            if (head == null||head.next==null)
+            {
+                return head;
+            }
+            int length = 1;
+            var resnode = head;
+            var resnode1 = new ListNode();
+
+            while (resnode.next != null)
+            {
+                resnode = resnode.next;
+                length++;
+            }
+            resnode.next = head;
+
+            var step =length- k % length;
+            resnode1 = head;
+
+            for (var i = 0; i < step-1; i++)
+            {
+                resnode1 = resnode1.next;
+            }
+            var resnode2 = resnode1.next;
+            resnode1.next = null;
+
+            return resnode2;
+
+        }
+    }   
