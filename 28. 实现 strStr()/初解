@@ -1,0 +1,28 @@
+public class Solution
+    {
+        public int StrStr(string haystack, string needle)
+        {
+            if (needle.Length == 0)
+            {
+                return 0;
+            }
+            for (var i = 0; i <= haystack.Length - needle.Length; i++)
+            {
+                if (haystack[i] == needle[0])
+                {
+                    for (var j = i; j <= i + needle.Length - 1; j++)
+                    {
+                        if (haystack[j] != needle[j - i])
+                        {
+                            goto c;
+                        }
+                    }
+                    return true;
+                }
+            c:;
+            }
+            return false;
+        }
+    }
+
+}
