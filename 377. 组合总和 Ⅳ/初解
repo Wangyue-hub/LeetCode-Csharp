@@ -1,0 +1,49 @@
+public class Solution
+    {
+        public int CombinationSum4(int[] nums, int target)
+        {
+            int result = 0;
+            if (nums.Length == 0)
+            {
+                return 0;
+            }
+            Array.Sort(nums);
+            if (target >= nums[0])
+            {
+                result += CombinationSum(nums, target, new Dictionary<int, int>()).Item1;
+            }
+            return result;
+        }
+        public Tuple<int,Dictionary<int,int>> CombinationSum(int[] nums, int target,Dictionary<int,int> keyValuePairs)
+        {
+            int result = 0;
+            if (target >= nums[0])
+            {
+                var i = 0;
+                while (i <= nums.Length - 1 && target >= nums[i])
+                {
+                    if (target == nums[i])
+                    {
+                        return Tuple.Create(result+1,keyValuePairs);
+                    }
+                    if (i <= nums.Length - 1 && target > nums[i])
+                    {
+                        if (keyValuePairs.ContainsKey(target - nums[i]))
+                        {
+                            int res = 0;
+                            keyValuePairs.TryGetValue(target - nums[i], out res);
+                            result += res;
+                        }
+                        else
+                        {
+                            int res = CombinationSum(nums, target - nums[i], keyValuePairs).Item1;
+                            result += res;
+                            keyValuePairs.Add(target - nums[i], res);                        
+                        }
+                        i++;
+                    }
+                }
+            }
+            return Tuple.Create(result, keyValuePairs);
+        }
+    }
