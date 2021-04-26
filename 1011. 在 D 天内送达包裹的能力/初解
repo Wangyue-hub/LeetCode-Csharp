@@ -1,0 +1,56 @@
+    public class Solution
+    {
+        public int ShipWithinDays(int[] weights, int D)
+        {
+            var weightSum = weights.Sum();
+            if (D == 1)
+            {
+                return weightSum;
+            }
+            var weightMin = Math.Max(weights.Max(), weightSum / D);           
+            return DoubleFind(weights,D,weightSum, weightMin);
+        }
+
+        public int Distrubtion(int[] weights,int capacity)
+        {
+            var i = 0;
+            var shipcount = 1;
+            var _capacity = capacity;
+            while (i<=weights.Length-1)
+            {
+                _capacity = _capacity - weights[i];
+                i++;
+                if (i <= weights.Length - 1&&_capacity < weights[i])
+                {
+                    _capacity = capacity;
+                    shipcount++;
+                }
+            }
+            return shipcount;
+        }
+
+        public int DoubleFind(int[] weights, int D,int max, int min)
+        {
+            if (max-min==1)
+            {
+                if (Distrubtion(weights, min) <= D)
+                {
+                    return min;
+                }
+                else
+                {
+                    return max;
+                }
+            }
+            int capacity = (max + min) / 2;
+            if (Distrubtion(weights, capacity) <= D)
+            {
+                return DoubleFind(weights, D, capacity, min);
+            }
+            else
+            {
+                return DoubleFind(weights, D, max, capacity);
+            }
+
+        }
+    }
