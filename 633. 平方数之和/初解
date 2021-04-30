@@ -1,0 +1,38 @@
+public class Solution
+    {
+        public bool JudgeSquareSum(int c)
+        {
+            List<double> list = new List<double>();
+
+            var i = 0;
+            while (Math.Pow(i, 2) <= c)
+            {
+                list.Add(Math.Pow(i, 2));
+                i++;
+            }
+
+            var pointer1 = 0;
+            var pointer2 = list.Count - 1;
+
+            while (pointer1 <= pointer2)
+            {
+                if (list[pointer1] + list[pointer2] == c)
+                {
+                    return true;
+                }
+                if (list[pointer1] + list[pointer2] < c)
+                {
+                    pointer1++;
+                    continue;
+                }
+                if (list[pointer1] + list[pointer2] > c)
+                {
+                    pointer2--;
+                    continue;
+                }
+            }
+
+            return false;
+
+        }
+    }
