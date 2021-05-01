@@ -1,0 +1,20 @@
+class Solution
+    {
+        public int GetImportance(IList<Employee> employees, int id)
+        {
+            var employee = employees.Where(x => x.id == id).FirstOrDefault();
+            if (employee.subordinates.Count == 0)
+            {
+                return employee.importance;
+            }
+            else
+            {
+                var result = employee.importance;
+                foreach (var employno in employee.subordinates)
+                {
+                    result += GetImportance(employees, employno);
+                }
+                return result;
+            }
+        }
+    }
