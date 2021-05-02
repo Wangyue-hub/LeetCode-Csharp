@@ -1,0 +1,33 @@
+    public class Solution
+    {
+        public int LeastBricks(IList<IList<int>> wall)
+        {
+            var list = new List<int>();
+            Dictionary<int, int> d = new Dictionary<int, int>();
+            var length = wall[0].Sum();
+            var leastBricks = wall.Count;
+            for (var i = 0; i <= wall.Count - 1; i++)
+            {
+                var res = 0;
+                var pointer = 0;
+                while (pointer<wall[i].Count-1)
+                {
+                    res += wall[i][pointer];
+                    if (!d.ContainsKey(res))
+                    {
+                        d.Add(res, 1);
+                    }
+                    else
+                    {
+                        d[res]++;
+                    }
+                    pointer++;
+                }
+            }
+            if (d.Values.Count == 0)
+            {
+                return leastBricks;
+            }
+            return leastBricks - d.Values.Max();
+        }
+    }
