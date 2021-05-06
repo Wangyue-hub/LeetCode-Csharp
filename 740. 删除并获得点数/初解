@@ -1,0 +1,30 @@
+ public class Solution
+    {
+        public int DeleteAndEarn(int[] nums)
+        {
+            int maxVal = 0;
+            foreach (int val in nums)
+            {
+                maxVal = Math.Max(maxVal, val);
+            }
+            int[] sum = new int[maxVal + 1];
+            foreach (int val in nums)
+            {
+                sum[val] += val;
+            }
+            return Rob(sum);
+        }
+
+        public int Rob(int[] nums)
+        {
+            int size = nums.Length;
+            int first = nums[0], second = Math.Max(nums[0], nums[1]);
+            for (int i = 2; i < size; i++)
+            {
+                int temp = second;
+                second = Math.Max(first + nums[i], second);
+                first = temp;
+            }
+            return second;
+        }
+    }
