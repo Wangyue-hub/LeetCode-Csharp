@@ -1,0 +1,16 @@
+public class Solution
+    {
+        public int XorOperation(int n, int start)
+        {
+            if (n == 1)
+            {
+                return start;
+            }
+            var result = start;
+            for (var i = 1; i <= n - 1; i++)
+            {
+                result = result ^ (start + 2 * i);
+            }
+            return result;
+        }
+    }
