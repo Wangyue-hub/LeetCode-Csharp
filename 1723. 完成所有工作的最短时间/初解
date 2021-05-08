@@ -1,0 +1,61 @@
+  public class Solution
+    {
+        public int MinimumTimeRequired(int[] jobs, int k)
+        {
+            Array.Sort(jobs);
+            var min = jobs[jobs.Length-1];
+            var max = jobs.Sum();
+            return DoubleFind(jobs, k, max,min);
+        }
+        public bool Back(int[] jobs, int[] workloads, int i, int limit)
+        {
+            if (i >= jobs.Length)
+            {
+                return true;
+            }
+            int cur = jobs[i];
+            for (int j = 0; j < workloads.Length; ++j)
+            {
+                if (workloads[j] + cur <= limit)
+                {
+                    workloads[j] += cur;
+                    if (Back(jobs, workloads, i + 1, limit))
+                    {
+                        return true;
+                    }
+                    workloads[j] -= cur;
+                }
+                // 如果当前工人未被分配工作，那么下一个工人也必然未被分配工作
+                // 或者当前工作恰能使该工人的工作量达到了上限
+                // 这两种情况下我们无需尝试继续分配工作
+                if (workloads[j] == 0 || workloads[j] + cur == limit)
+                {
+                    break;
+                }
+            }
+            return false;
+        }
+        public bool check(int[] jobs, int k, int limit)
+        {
+            int[] a = new int[k];
+            return Back(jobs, a, 0, limit);
+        }
+        public int DoubleFind(int[] jobs,int k, int max, int min)
+        {
+            while (max > min)
+            {
+                int capacity = min + (max - min) / 2;
+                if (check(jobs, k,  capacity))
+                {
+                    max = capacity;
+                }
+                else
+                {
+                    min = capacity+1;
+                }
+            }
+            return min;
+
+        }
+
+    }
