@@ -1,0 +1,66 @@
+public class Solution
+    {
+        public int MinDays(int[] bloomDay, int m, int k)
+        {
+            if (bloomDay.Length < m * k)
+            {
+                return -1;
+            }
+            var bset = bloomDay.ToList().Distinct().OrderBy(x => x).ToList();
+            if (bset.Count() == 1)
+            {
+                if (canMakeBouques(bloomDay, m, k, bset[0]))
+                    return bset[0];
+                else
+                    return -1;
+            }
+
+            var left = 0;
+            var right = bset.Count()-1;
+
+            while (left < right)
+            {
+                var mid = left+(right-left)/2;
+                if (canMakeBouques(bloomDay, m, k, bset[mid]))
+                {
+                    right = mid;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+
+
+            return bset[left];
+        }
+
+
+        public bool canMakeBouques(int[] bloomDay, int m, int k,int taget)
+        {
+            var i = 0;
+            while (i <= bloomDay.Length-1&&m>0)
+            {
+                if (bloomDay[i] <= taget)
+                {
+                    if (i + k-1 > bloomDay.Length - 1)
+                    {
+                        return false;
+                    }
+                    for (var a = i; a <= i+ k-1; a++)
+                    {
+                        if (bloomDay[a] > taget)
+                        {
+                            i = a;
+                            goto c;
+                        }
+                    }
+                    m--;
+                    i += k-1;
+                }
+                i++;
+            c:;
+            }
+            return m==0;
+        }
+    }
