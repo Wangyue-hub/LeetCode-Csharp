@@ -1,0 +1,36 @@
+public class Solution
+    {
+        public bool LeafSimilar(TreeNode root1, TreeNode root2)
+        {
+            var lista = new List<int>();
+            var listb = new List<int>();
+            GetLeaves(root1,ref lista);
+            GetLeaves(root2, ref listb);
+            if (lista.Count != listb.Count)
+            {
+                return false;
+            }
+            for (var i = 0; i <= lista.Count-1; i++)
+            {
+                if (lista[i] != listb[i])
+                    return false;
+            }
+            return true;
+        }
+
+        public void GetLeaves(TreeNode root, ref List<int> c)
+        {
+            if (root.left != null)
+            {
+                GetLeaves(root.left, ref c);
+            }
+            if (root.right != null)
+            {
+                GetLeaves(root.right, ref c);
+            }
+            if (root.left == null && root.right == null)
+            {
+                c.Add(root.val);
+            }
+        }
+    }
