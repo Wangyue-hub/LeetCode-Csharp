@@ -1,0 +1,22 @@
+public class Solution
+    {
+        public int HammingDistance(int x, int y)
+        {
+            var res = x ^ y;
+            var result = 0;
+            var reslist = new List<int>();
+            for (var i = 0; i <= 30; i++)
+            {
+                reslist.Add(Convert.ToInt32(Math.Pow(2, i)));
+            }
+            for (var j = 30; j >= 0; j--)
+            {
+                if (res >= reslist[j])
+                {
+                    res = res - reslist[j];
+                    result++;
+                }
+            }
+            return result;
+        }
+    }
